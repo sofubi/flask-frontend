@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  web:
+    labels:
+      shipyard.route: '/'
+    build: '.'
+    environment:
+      DATABASE_URL: 'postgres://obscure-user:obscure-password@postgres/app'
+      DEV: ${DEV}
+      FLASK_DEBUG: '1'
+    volumes:
+      - './filesystem/entrypoints:/entrypoints:ro'
+      - './migrations:/srv/migrations'
+      - './src:/srv/src:ro'
+    ports:
+      - '8080:8080'
+
+volumes:
+  postgres:
